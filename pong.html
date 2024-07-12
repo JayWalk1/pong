@@ -36,6 +36,8 @@
         // Create the ball
         const ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 15, speed: 4, dx: 4, dy: 4, color: "orange" };
 
+        let missed = false;
+
         // Draw the paddle
         function drawPaddle(x, y, width, height, color) {
             context.fillStyle = color;
@@ -45,6 +47,14 @@
         // Draw the ball (Bitcoin logo)
         function drawBall(x, y, radius, img) {
             context.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
+        }
+
+        // Draw the message
+        function drawMessage() {
+            context.fillStyle = "red";
+            context.font = "bold 48px Arial";
+            context.textAlign = "center";
+            context.fillText("Haha, you're a twat!", canvas.width / 2, canvas.height / 2);
         }
 
         // Move the paddle
@@ -76,13 +86,21 @@
                 ball.dx *= -1;
             }
 
-            // Reset ball if it goes out of bounds
-            if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
-                ball.x = canvas.width / 2;
-                ball.y = canvas.height / 2;
-                ball.dx *= -1;
-                ball.dy *= -1;
+            // Check if the player missed the ball
+            if (ball.x + ball.radius < 0) {
+                missed = true;
+                resetBall();
+            } else if (ball.x - ball.radius > canvas.width) {
+                resetBall();
             }
+        }
+
+        // Reset ball position and speed
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx *= -1;
+            ball.dy *= -1;
         }
 
         // Update the game canvas
@@ -105,6 +123,10 @@
             drawPaddle(player.x, player.y, player.width, player.height, player.color);
             drawPaddle(computer.x, computer.y, computer.width, computer.height, computer.color);
             drawBall(ball.x, ball.y, ball.radius, bitcoinImg);
+
+            if (missed) {
+                drawMessage();
+            }
         }
 
         // Game loop
