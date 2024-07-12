@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <canvas id="pong" width="800" height="400"></canvas>
+    <canvas id="pong" width="800" height="600"></canvas>
     <script>
         const canvas = document.getElementById("pong");
         const context = canvas.getContext("2d");
@@ -34,7 +34,7 @@
         const computer = { x: canvas.width - paddleWidth, y: canvas.height / 2 - paddleHeight / 2, width: paddleWidth, height: paddleHeight, color: "red", dy: 4 };
 
         // Create the ball
-        const ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 10, speed: 4, dx: 4, dy: 4, color: "orange" };
+        const ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 15, speed: 4, dx: 4, dy: 4, color: "orange" };
 
         // Draw the paddle
         function drawPaddle(x, y, width, height, color) {
